@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:my_application/common/utils/global_helper.dart';
 import 'package:my_application/repository/sign_in_repository.dart';
 
 part 'sign_in_event.dart';
@@ -28,7 +26,5 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         ? emit(state.copyWith(status: SignInStatus.success))
         : emit(state.copyWith(status: SignInStatus.failure));
 
-    final token = GlobalHelper().sharedPreferences.getString('token_key');
-    log('Token => $token');
   }
 }

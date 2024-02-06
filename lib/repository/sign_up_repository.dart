@@ -1,26 +1,23 @@
 import 'package:my_application/common/constants/constant.dart';
 import 'package:my_application/common/utils/global_helper.dart';
 
-class SignInRepository {
-  Future<String?> signIn(String email, String password) async {
+class SignUpRepository {
+  Future<String?> signUp(String email, String password, String username) async {
     try {
       final data = {
-        'username': email,
+        'email': email,
         'password': password,
+        'username': username,
       };
 
       final response = await GlobalHelper().dio.post<Map<String, dynamic>>(
-            AppConstant.signInUrl,
+            AppConstant.signUpUrl,
             data: data,
           );
 
       if (response.statusCode == 200) {
-        final token = response.data!['data']['token'].toString();
-        await GlobalHelper()
-            .sharedPreferences
-            .setString(AppConstant.tokenKey, token);
-
-        return token;
+        final message = response.data!['message'].toString();
+        return message;
       }
 
       return null;

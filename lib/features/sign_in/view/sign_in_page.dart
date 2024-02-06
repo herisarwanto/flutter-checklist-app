@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_application/home/home.dart';
-import 'package:my_application/sign_in/bloc/sign_in_bloc.dart';
+import 'package:my_application/common/widgets/flutter_toast.dart';
+import 'package:my_application/features/home/home.dart';
+import 'package:my_application/features/sign_in/bloc/sign_in_bloc.dart';
+import 'package:my_application/features/sign_up/sign_up.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -31,9 +33,10 @@ class SignInWidget extends StatelessWidget {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
         if (state.status == SignInStatus.success) {
+          toastInfo(msg: 'Login Success');
           _completeLogin(context);
         } else if (state.status == SignInStatus.failure) {
-          log('Login Failed');
+          toastInfo(msg: 'Login Failed');
         }
       },
       child: Scaffold(
@@ -43,15 +46,16 @@ class SignInWidget extends StatelessWidget {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Enter your email',
+                    hintText: 'Enter your username',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please enter your username';
                     }
                     return null;
                   },
@@ -71,22 +75,48 @@ class SignInWidget extends StatelessWidget {
                     return null;
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Validate will return true if the form is valid, or false if
-                      // the form is invalid.
-                      if (_formKey.currentState!.validate()) {
-                        context.read<SignInBloc>().add(
-                          DoSignIn(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          ),
-                        );
-                      }
-                    },
-                    child: const Text('SignIn'),
+                const SizedBox(
+                  height: 28,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => SignUpPage(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'SignUp',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate will return true if the form is valid, or false if
+                        // the form is invalid.
+                        if (_formKey.currentState!.validate()) {
+                          context.read<SignInBloc>().add(
+                                DoSignIn(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                ),
+                              );
+                        }
+                      },
+                      child: const Text('SignIn'),
+                    ),
                   ),
                 ),
               ],
