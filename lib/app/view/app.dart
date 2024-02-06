@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_application/features/splash/splash.dart';
 import 'package:my_application/l10n/l10n.dart';
 import 'package:my_application/features/sign_in/view/sign_in_page.dart';
 
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
       // ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const SignInPage(),
+      home: const SplashPage(),
     );
   }
 }
