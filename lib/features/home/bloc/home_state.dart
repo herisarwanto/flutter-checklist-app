@@ -5,27 +5,27 @@ enum HomeStatus { initial, success, failure }
 class HomeState extends Equatable {
   const HomeState({
     this.status = HomeStatus.initial,
-    this.courses = const [],
+    this.checklist = const [],
   });
 
   final HomeStatus status;
-  final List<CourseModel> courses;
+  final List<ChecklistModel> checklist;
 
   HomeState copyWith({
     HomeStatus? status,
-    List<CourseModel>? courses,
+    List<ChecklistModel>? checklist,
   }) {
     return HomeState(
       status: status ?? this.status,
-      courses: courses ?? this.courses,
+      checklist: checklist ?? this.checklist,
     );
   }
 
   @override
   String toString() {
-    return 'HomeState{status: $status, courses: $courses}';
+    return 'HomeState{status: $status, courses: $checklist}';
   }
 
   @override
-  List<Object> get props => [status, courses];
+  List<Object> get props => [status, checklist];
 }

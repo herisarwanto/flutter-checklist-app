@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc()..add(CourseFetched()),
+      create: (context) => HomeBloc()..add(ChecklistFetched()),
       child: HomeWidget(),
     );
   }
@@ -27,14 +27,24 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text('Home'),
+      ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          return state.courses.isNotEmpty
-              ? ListView.builder(
-                  itemCount: state.courses.length,
-                  itemBuilder: (context, index) {
-                    return Text(state.courses[index].name ?? '');
-                  },
+          return state.checklist.isNotEmpty
+              ? Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  child: ListView.builder(
+                    itemCount: state.checklist.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(state.checklist[index].name ?? ''),
+                      );
+                    },
+                  ),
                 )
               : const Center(child: Text('No Data!'));
         },

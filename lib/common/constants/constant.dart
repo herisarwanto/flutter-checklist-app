@@ -4,7 +4,7 @@ class AppConstant {
   static const baseUrl = 'http://94.74.86.174:8080/api/';
   static const signInUrl = 'login';
   static const signUpUrl = 'register';
-  static const courseUrl = 'api/courseList';
+  static const checklistUrl = 'checklist';
 
   // Shared preferences key
   static const tokenKey = 'token_key';
